@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:posapps/products.dart';
+import 'package:posapps/response_model/bankSlipUpload.dart';
 
 class NewOrderList extends StatefulWidget {
   const NewOrderList({Key? key}) : super(key: key);
@@ -142,7 +143,7 @@ class _NewOrderListState extends State<NewOrderList> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -168,7 +169,7 @@ class _NewOrderListState extends State<NewOrderList> {
                       });
                     },
                 ),
-                Text("Advance",style: TextStyle(fontSize: 17),),
+                const Text("Advance",style: TextStyle(fontSize: 17),),
               ],
             ),
                 Row(
@@ -183,7 +184,7 @@ class _NewOrderListState extends State<NewOrderList> {
                         });
                       },
                     ),
-                    Text("Cash On Delivery",style: TextStyle(fontSize: 17),),
+                    const Text("Cash On Delivery",style: TextStyle(fontSize: 17),),
                   ],
                 ),
                 Row(
@@ -198,7 +199,7 @@ class _NewOrderListState extends State<NewOrderList> {
                         });
                       },
                     ),
-                    Text("Cradit",style: TextStyle(fontSize: 17),),
+                    const Text("Cradit",style: TextStyle(fontSize: 17),),
                   ]
                 ),
             //SELECT DELIVERY DATE
@@ -236,9 +237,9 @@ class _NewOrderListState extends State<NewOrderList> {
                     }else{
                       print("Not Selected");
                     }
-                    },
+                  },
                 ),
-             ),
+              ),
             ),
             //SELECT TRANSPORT
             const SizedBox(height: 20,),
@@ -269,16 +270,20 @@ class _NewOrderListState extends State<NewOrderList> {
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
-              Text("Upload Bank Payment Slip",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 25, fontWeight: FontWeight.bold),
-              ),
               const SizedBox(height: 20,),
-
-          ],
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BankSlip()));
+                  },
+                  child: const Text("Upload Bank Payment Slip",
+                    style: TextStyle(color: Colors.deepOrange, fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
+
 }
