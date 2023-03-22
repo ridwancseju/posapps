@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'dart:io' as io;
 import 'cartModel.dart';
 
-class DB {
+class DBHelper {
 static Database? _db;
 Future<Database?> get db async {
   if(_db != null){

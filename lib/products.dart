@@ -1,6 +1,10 @@
 import 'package:badges/badges.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:posapps/response_model/cartModel.dart';
+import 'package:posapps/response_model/cartProvider.dart';
+import 'package:posapps/response_model/database.dart';
+import 'package:provider/provider.dart';
 
 class ProductsList extends StatefulWidget {
   const ProductsList({Key? key}) : super(key: key);
@@ -9,9 +13,10 @@ class ProductsList extends StatefulWidget {
   State<ProductsList> createState() => _ProductsListState();
 }
 class _ProductsListState extends State<ProductsList> {
-  List<String> productName = ['Broiler Grower 50kg/bag', 'Layer Layer 50kg/bag', 'Sonali Starter 50kg/bag'];
-  List<int> TP =[3200, 3100, 3000];
-  List<String> Discount = ['2%', '5%', '10%'];
+  DBHelper dB = DBHelper();
+  List<String> productName = ['Broiler Grower 50kg/bag', 'Broiler Starter 50kg/bag', 'Layer Layer 50kg/bag', 'Layer Starter 50kg/bag', 'Sonali Starter 50kg/bag'];
+  List<int> TP =[3200, 3150, 3100, 3000, 2800];
+  List<String> Discount = ['2%', '4%', '5%', '7%', '10%'];
   List<String> productImage = [
     'AP_broiler_starter-1.1.jpg', 'APLayer-grower-1.2.jpg', 'APSonali-feed-1.2.jpg', 'APSonali-grower-feed-1.2.jpg',
   ];
@@ -19,6 +24,7 @@ class _ProductsListState extends State<ProductsList> {
   //final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Products List"),
@@ -55,27 +61,66 @@ class _ProductsListState extends State<ProductsList> {
                                   child: Container(
                                     padding: const EdgeInsets.all(5.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      // crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(productName[index].toString(),
-                                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                        Row(
+                                          children: [
+                                            Text(productName[index].toString(),
+                                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                            ),
+                                          ],
                                         ),
                                         const SizedBox(height: 10,),
-                                        Text("Trade Price : " + TP[index].toString(),),
+                                        Row(
+                                          children: [
+                                            Text("Trade Price : " + TP[index].toString(),),
+                                          ],
+                                        ),
                                         const SizedBox(height: 10,),
-                                        Text("Discount: " + Discount[index].toString(),),
+                                        Row(
+                                          children: [
+                                            Text("Discount: " + Discount[index].toString(),),
+                                          ],
+                                        ),
+                                        // const SizedBox(height: 10,),
+                                        // Row(
+                                        //   children: [
+                                        //     TextField(
+                                        //
+                                        //       decoration: InputDecoration(
+                                        //         hintText: "Qty",
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
                                         const SizedBox(height: 10,),
                                         Align(
                                           alignment: Alignment.bottomRight,
-                                          child: Container(
-                                            height: 30, width: 90,
-                                            decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: Center(
-                                              child: Text("Add to cart", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                          child: InkWell(
+                                            onTap: (){
+                                              dB.insert(
+                                                Cart(
+                                                  id: index,
+                                                  productId: index.toString(),
+                                                  productName: productName[index].toString(),
+                                                  initialPrice: TP[index],
+                                                  productPrice: TP[index],
+                                                  quantity: 1,
+                                                )
+
+                                              );
+
+                                            },
+                                            child: Container(
+                                              height: 30, width: 90,
+                                              decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius: BorderRadius.circular(5)
+                                              ),
+                                              child: const Center(
+                                                child: Text("Add to cart", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                              ),
                                             ),
                                           ),
                                         )
