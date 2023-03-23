@@ -143,6 +143,10 @@ class _NewOrderListState extends State<NewOrderList> {
                 ),
               ],
             ),
+              const SizedBox(height: 20,),
+            Container(
+              height: 50,
+            ),
             const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

@@ -6,6 +6,8 @@ import 'package:posapps/response_model/cartProvider.dart';
 import 'package:posapps/response_model/database.dart';
 import 'package:provider/provider.dart';
 
+import 'createNewOrder.dart';
+
 class ProductsList extends StatefulWidget {
   const ProductsList({Key? key}) : super(key: key);
 
@@ -15,12 +17,11 @@ class ProductsList extends StatefulWidget {
 class _ProductsListState extends State<ProductsList> {
   DBHelper dB = DBHelper();
   List<String> productName = ['Broiler Grower 50kg/bag', 'Broiler Starter 50kg/bag', 'Layer Layer 50kg/bag', 'Layer Starter 50kg/bag', 'Sonali Starter 50kg/bag'];
-  List<int> TP =[3200, 3150, 3100, 3000, 2800];
+  List<int> productPrice =[3200, 3150, 3100, 3000, 2800];
   List<String> Discount = ['2%', '4%', '5%', '7%', '10%'];
   List<String> productImage = [
     'AP_broiler_starter-1.1.jpg', 'APLayer-grower-1.2.jpg', 'APSonali-feed-1.2.jpg', 'APSonali-grower-feed-1.2.jpg',
   ];
-
   //final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -29,14 +30,19 @@ class _ProductsListState extends State<ProductsList> {
       appBar: AppBar(
         title: const Text("Products List"),
         centerTitle: true,
-        actions: const [
+        actions: [
           Center(
             child: Badge(
-              badgeContent: Text("0", style: TextStyle(color: Colors.white),),
+              badgeContent: Consumer<CartProvider>(
+                builder: (context, value, child){
+                  return Text(value.getCounter().toString(), style: const TextStyle(color: Colors.white));
+                },
             ),
+              child: const Icon(Icons.shopping_bag_outlined),
           ),
-          Icon(Icons.shopping_bag_outlined),
-        ],
+      ),
+      const SizedBox(width: 30.0,),
+      ],
       ),
       body: Column(
         children: [
@@ -74,15 +80,16 @@ class _ProductsListState extends State<ProductsList> {
                                         const SizedBox(height: 10,),
                                         Row(
                                           children: [
-                                            Text("Trade Price : " + TP[index].toString(),),
+                                            Text("Trade Price : ${productPrice[index]}",),
                                           ],
                                         ),
                                         const SizedBox(height: 10,),
                                         Row(
                                           children: [
-                                            Text("Discount: " + Discount[index].toString(),),
+                                            Text("Discount: ${Discount[index]}",),
                                           ],
                                         ),
+
                                         // const SizedBox(height: 10,),
                                         // Row(
                                         //   children: [
@@ -94,35 +101,46 @@ class _ProductsListState extends State<ProductsList> {
                                         //     ),
                                         //   ],
                                         // ),
-                                        const SizedBox(height: 10,),
+                                        // const SizedBox(height: 10,),
                                         Align(
                                           alignment: Alignment.bottomRight,
-                                          child: InkWell(
-                                            onTap: (){
-                                              dB.insert(
-                                                Cart(
-                                                  id: index,
-                                                  productId: index.toString(),
-                                                  productName: productName[index].toString(),
-                                                  initialPrice: TP[index],
-                                                  productPrice: TP[index],
-                                                  quantity: 1,
-                                                )
+                                          // child: InkWell(
+                                          //   onTap: (){
+                                          //     dB.insert(
+                                          //       Cart(
+                                          //         id: index,
+                                          //         productId: index.toString(),
+                                          //         productName: productName[index].toString(),
+                                          //         initialPrice: productPrice[index],
+                                          //         productPrice: productPrice[index],
+                                          //         quantity: 1,
+                                          //       )
+                                          //     ).then((value) {
+                                          //       print("Product is added to cart");
+                                          //       cart.addTotalPrice(double.parse(productPrice[index].toString()));
+                                          //       cart.addCounter();
+                                          //     }).onError((error, stackTrace){
+                                          //       print(error.toString());
+                                          //     });
+                                          //   },
+                                            child: ElevatedButton(
 
-                                              );
+                                              onPressed: () {
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewOrderList()));
 
-                                            },
-                                            child: Container(
-                                              height: 30, width: 90,
-                                              decoration: BoxDecoration(
-                                                color: Colors.green,
-                                                borderRadius: BorderRadius.circular(5)
-                                              ),
-                                              child: const Center(
-                                                child: Text("Add to cart", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                              },
+                                              child: Container(
+                                                height: 20, width: 70,
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.green,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                child: const Center(
+                                                  child: Text("Add to cart", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                         // ),
                                         )
                                       ],
                                     ),
@@ -134,11 +152,11 @@ class _ProductsListState extends State<ProductsList> {
                         ),
                       ),
                     );
-                  }),
+                  }
+              ),
           ),
         ],
       ),
-
       // body: ListView(
       //
       //   children: [
