@@ -137,15 +137,23 @@ class _NewOrderListState extends State<NewOrderList> {
                       onPressed: (){
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProductsList()));
                       },
-                    child: const Icon(Icons.add,),
                     backgroundColor: Colors.green,
+                    child: const Icon(Icons.add,),
                   ),
                 ),
               ],
             ),
               const SizedBox(height: 20,),
-            Container(
+            const SizedBox(
               height: 50,
+              // child: ListView.builder(
+              //   //itemCount: ,
+              //     itemBuilder: (BuildContext context, index){
+              //       return Container(
+              //         color: Colors.blue,
+              //           child: const ProductsList());
+              //     }
+              // ),
             ),
             const SizedBox(height: 20,),
             Row(

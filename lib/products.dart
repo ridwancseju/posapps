@@ -126,7 +126,7 @@ class _ProductsListState extends State<ProductsList> {
                                             child: ElevatedButton(
 
                                               onPressed: () {
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewOrderList()));
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewOrderList()));
 
                                               },
                                               child: Container(
