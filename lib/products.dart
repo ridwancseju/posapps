@@ -89,10 +89,9 @@ class _ProductsListState extends State<ProductsList> {
                                             Text("Discount: ${Discount[index]}",),
                                           ],
                                         ),
-
-                                        // const SizedBox(height: 10,),
+                                        const SizedBox(height: 10,),
                                         // Row(
-                                        //   children: [
+                                        //   children: const [
                                         //     TextField(
                                         //
                                         //       decoration: InputDecoration(
@@ -101,7 +100,7 @@ class _ProductsListState extends State<ProductsList> {
                                         //     ),
                                         //   ],
                                         // ),
-                                        // const SizedBox(height: 10,),
+                                        const SizedBox(height: 10,),
                                         Align(
                                           alignment: Alignment.bottomRight,
                                           // child: InkWell(

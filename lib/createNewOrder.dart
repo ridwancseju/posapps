@@ -144,8 +144,12 @@ class _NewOrderListState extends State<NewOrderList> {
               ],
             ),
               const SizedBox(height: 20,),
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: 500,
+              width: double.infinity,
+              child: Container(
+                  width: double.infinity,
+                  child: const ProductsList()),
               // child: ListView.builder(
               //   //itemCount: ,
               //     itemBuilder: (BuildContext context, index){
@@ -158,13 +162,11 @@ class _NewOrderListState extends State<NewOrderList> {
             const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  child: const Text("Select Payment Type:",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+              children: const [
+                Text("Select Payment Type:",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -224,7 +226,7 @@ class _NewOrderListState extends State<NewOrderList> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    suffixIcon: Icon(Icons.calendar_today),
+                    suffixIcon: const Icon(Icons.calendar_today),
                     //icon: Icon(Icons.calendar_today),
                     labelText: "Select Delivery Date",
                     labelStyle: const TextStyle(
