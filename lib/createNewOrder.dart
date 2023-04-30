@@ -3,6 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:posapps/products.dart';
 import 'package:posapps/response_model/bankSlipUpload.dart';
 
+class Item {
+  String name;
+  String description;
+  Item({required this.name, required this.description});
+}
+// List<Item> generateItems(int numberOfItems) {
+//   return List.generate(numberOfItems, (index) {
+//     return Item(
+//         name: "Broiler $index",
+//         description: "This is a Broiler item $index"
+//     );
+//   }
+//   );
+// }
+
 class NewOrderList extends StatefulWidget {
   const NewOrderList({Key? key}) : super(key: key);
   @override
@@ -45,6 +60,7 @@ class _NewOrderListState extends State<NewOrderList> {
       });
     }
   }
+  List<Item> items = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,32 +148,36 @@ class _NewOrderListState extends State<NewOrderList> {
                       ),
                     ),
                 ),
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      return ListTile(
+                        title: Text(item.name),
+                        subtitle: Text('Description: ${item.description}'),
+                      );
+                    },
+                  ),
+                ),
                 Container(
                   child: FloatingActionButton.small(
-                      onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProductsList()));
+                      onPressed: () async{
+                        final newItem = await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductsList()),
+                        );
+                        if(newItem != null) {
+                          // Add the new item to the list of items
+                          setState(() {
+                            items.add(newItem);
+                          });
+                        }
                       },
                     backgroundColor: Colors.green,
                     child: const Icon(Icons.add,),
                   ),
                 ),
               ],
-            ),
-              const SizedBox(height: 20,),
-            SizedBox(
-              height: 500,
-              width: double.infinity,
-              child: Container(
-                  width: double.infinity,
-                  child: const ProductsList()),
-              // child: ListView.builder(
-              //   //itemCount: ,
-              //     itemBuilder: (BuildContext context, index){
-              //       return Container(
-              //         color: Colors.blue,
-              //           child: const ProductsList());
-              //     }
-              // ),
             ),
             const SizedBox(height: 20,),
             Row(
@@ -285,19 +305,18 @@ class _NewOrderListState extends State<NewOrderList> {
               ),
             ),
               const SizedBox(height: 20,),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BankSlip()));
-                  },
-                  child: const Text("Upload Bank Payment Slip",
-                    style: TextStyle(color: Colors.deepOrange, fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-              ),
+              // TextButton(
+              //     onPressed: () {
+              //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BankSlip()));
+              //     },
+              //     child: const Text("Upload Bank Payment Slip",
+              //       style: TextStyle(color: Colors.deepOrange, fontSize: 25, fontWeight: FontWeight.bold),
+              //     ),
+              // ),
             ],
           ),
         ),
       ),
     );
   }
-
 }
